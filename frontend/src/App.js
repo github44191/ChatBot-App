@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios';
-import ReactMarkdown from 'react-markdown';
+// import ReactMarkdown from 'react-markdown';
 import "./App.css";
 import Messages from './Components/Messages';
 
@@ -8,7 +8,7 @@ function App() {
   const [message, setMessage] = useState('');
   const [messages, setMessages] = useState([]);
   const [revResponse, setRevResponse] = useState([]);
-  const [response, setResponse] = useState('');
+  // const [response, setResponse] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
@@ -26,9 +26,8 @@ function App() {
       axios.post("http://127.0.0.1:8000/generate-response/",{ content : message })
         .then(response => {
           // Handle the response data
-          setResponse(response.data.response);
+          // setResponse(response.data.response);
           setMessages([...messages, { message: message, response: response.data.response }]);
-
           setIsLoading(false)
           setMessage('');
         })
