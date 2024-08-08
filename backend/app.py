@@ -38,7 +38,7 @@ def generate_res(prompt):
 
     db3 = Chroma(persist_directory='./chroma_db1', embedding_function=embedding_function)
 
-    result2 = db3.similarity_search_with_score(prompt,k=3)
+    result2 = db3.similarity_search_with_score(prompt,k=2)
     # result2
 
     for i in result2:

@@ -21,10 +21,9 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-
 @app.get("/")
 async def read_root():
-    return "Backend Server using FastAPI changed"
+    return "Backend Server using FastAPI"
 
 # @app.get("/items")
 # async def read_items():
