@@ -1,10 +1,11 @@
 from langchain_text_splitters import RecursiveCharacterTextSplitter
-from langchain_community.document_loaders import TextLoader
+# from langchain_community.document_loaders import TextLoader
 from langchain_community.embeddings import SentenceTransformerEmbeddings
 from langchain_chroma import Chroma
-# from langchain_community.document_loaders import PyMuPDFLoader
+from langchain_community.document_loaders import PyMuPDFLoader
 from dotenv import load_dotenv
 import os
+import random
 import google.generativeai as genai
 
 # Load environment variables from .env file
@@ -15,20 +16,31 @@ load_dotenv()
 GOOGLE_API_KEY = os.getenv("GEMINI_API_KEY")
 HF_TOKEN = os.getenv('HF_TOKEN')
 
-loader = TextLoader("./RSDOC.txt", encoding='utf-8')
+user_folder = os.path.expanduser('~')
+pdf_path = os.path.join(user_folder, 'Downloads', 'RSall5unit.pdf')
+# print(pdf_path)
+
+loader = PyMuPDFLoader(pdf_path)
 documents = loader.load()
-# documents[0].page_content
 
 text_splitter = RecursiveCharacterTextSplitter(chunk_size=500, chunk_overlap=0)
 docs = text_splitter.split_documents(documents)
-# len(docs)
+# print(len(docs))
 
 embedding_function = SentenceTransformerEmbeddings(model_name="all-MiniLM-L6-v2")
 
 db = Chroma.from_documents(docs, embedding_function)
 
+random_int = random.randint(1, 1000)
+# print(random_int)
 
-# db2 = Chroma.from_documents(docs, embedding_function, persist_directory='./chroma_db1')
+persist_directory = os.path.join(user_folder, "Embeddings", f"chroma_db{random_int}")
+
+os.makedirs(persist_directory, exist_ok=True)
+
+
+db2 = Chroma.from_documents(docs, embedding_function, persist_directory=persist_directory)
+
 genai.configure(api_key=GOOGLE_API_KEY)
 
 model = genai.GenerativeModel('models/gemini-1.5-flash')
@@ -36,7 +48,7 @@ model = genai.GenerativeModel('models/gemini-1.5-flash')
 
 def generate_res(prompt):
 
-    db3 = Chroma(persist_directory='./chroma_db1', embedding_function=embedding_function)
+    db3 = Chroma(persist_directory=persist_directory, embedding_function=embedding_function)
 
     result2 = db3.similarity_search_with_score(prompt,k=2)
     # result2
@@ -44,7 +56,8 @@ def generate_res(prompt):
     for i in result2:
       context = ""
       context +=i[0].page_content
-      print(context)
+      # print(context)
+    # nothin = ''
 
     response = model.generate_content([prompt, context])
     return response.text
