@@ -16,9 +16,12 @@ load_dotenv()
 GOOGLE_API_KEY = os.getenv("GEMINI_API_KEY")
 HF_TOKEN = os.getenv('HF_TOKEN')
 
-user_folder = os.path.expanduser('~')
-pdf_path = os.path.join(user_folder, 'Downloads', 'RSall5unit.pdf')
+# user_folder = os.path.expanduser('~')
+# pdf_path = os.path.join('RSall5unit.pdf')
 # print(pdf_path)
+current_dir = os.path.dirname(__file__)
+
+pdf_path = os.path.join(current_dir, 'RSall5unit.pdf')
 
 loader = PyMuPDFLoader(pdf_path)
 documents = loader.load()
@@ -34,12 +37,13 @@ db = Chroma.from_documents(docs, embedding_function)
 random_int = random.randint(1, 1000)
 # print(random_int)
 
-persist_directory = os.path.join(user_folder, "Embeddings", f"chroma_db{random_int}")
+persist_directory = os.path.join("Embeddings", f"chroma_db{random_int}")
+# print(persist_directory)
 
 os.makedirs(persist_directory, exist_ok=True)
 
 
-db2 = Chroma.from_documents(docs, embedding_function, persist_directory=persist_directory)
+db2 = Chroma.from_documents(docs, embedding_function, persist_directory='../Embeddings')
 
 genai.configure(api_key=GOOGLE_API_KEY)
 
