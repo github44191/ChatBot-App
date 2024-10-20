@@ -1,0 +1,16 @@
+.content-title {
+  background-color: rgb(255, 255, 255);
+  padding: .5rem;
+  margin: 4px 1rem;
+  border-radius: .5rem;
+  font-size: 16px;
+  cursor: pointer;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden; 
+}
+
+.content-title:hover {
+  transform: tr3;
+  box-shadow: 1px 1px 10px 2px rgba(0, 0, 0, 0.15);
+}

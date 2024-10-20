@@ -23,7 +23,7 @@ text_splitter = RecursiveCharacterTextSplitter(chunk_size=500, chunk_overlap=0)
 docs = text_splitter.split_documents(documents)
 # len(docs)
 
-embedding_function = SentenceTransformerEmbeddings(model_name="all-MiniLM-L6-v2")
+embedding_function = SentenceTransformerEmbeddings(model_name="all-MiniLM-L6-v2") #textembeddingada
 
 db = Chroma.from_documents(docs, embedding_function)
 

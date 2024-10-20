@@ -59,5 +59,5 @@ def generate_res(prompt):
       # print(context)
     # nothin = ''
 
-    response = model.generate_content([prompt, context])
+    response = model.generate_content([prompt, f"Based on the context :{context}"])
     return response.text

@@ -18,8 +18,9 @@ const Main = () => {
 
   const saveUserData = async () => {
     try {
+      // eslint-disable-next-line
+      if(revResponse == 0) return
       await axios.post('http://127.0.0.1:8000/addHistory', {responseHistory: revResponse});
-      console.log('User data saved');
     } catch (error) {
       console.error('Error saving user data', error);
     }

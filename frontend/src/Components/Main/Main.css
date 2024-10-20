@@ -4,11 +4,11 @@
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
-  /* border: 1px solid #ccc;
+  border: 1px solid #ccc;
   border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); */
-  padding: 10px;
-  margin: 1rem auto;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 1rem;
+  margin: 1rem auto 0;
   margin-left: 1rem;
   background-color: #fff;
   overflow-x: hidden;
@@ -93,7 +93,7 @@
 .input-container {
   display: flex;
   padding: 1rem;
-  width: 60%;
+  width: 50%;
   position: fixed;
   bottom: 1rem ;
 }
